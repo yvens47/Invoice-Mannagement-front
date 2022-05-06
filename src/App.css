@@ -1,5 +1,13 @@
-main {
-  text-align: center;
-  vertical-align: center;
-  line-height: 100vh
+
+.wrapper{
+  background:#eee;
+  min-height:100vh;
+  width:100%;
+}
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
 }

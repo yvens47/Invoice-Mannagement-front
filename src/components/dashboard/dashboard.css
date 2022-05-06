@@ -1,0 +1,50 @@
+
+.navbar {
+    
+    z-index: 15;
+}
+.dashboard{
+  
+}
+.content {
+  width:80%;
+  margin-left:10%;
+}
+
+.sidebar{
+  width: 4.5rem;
+  position:fixed;
+  bottom:0;
+  height:100%;
+  background:white;
+  z-index: 10;
+  
+}
+.sidebar div:first-child{
+  background:white;
+}
+.documents{
+  background:white;
+  
+}
+.account-balance{
+  background:white;
+
+  
+}
+
+.document:hover{
+  background:#eee;
+}
+.upload-label input {
+    display:none;
+    
+}
+.upload-label  {
+   
+    display:flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
