@@ -48,3 +48,25 @@
   align-items: center;
   height: 100px;
 }
+
+
+@media (max-width: 575.98px) {
+  .sidebar{
+    display:none;
+  }
+  .content {
+    width: 100%;
+    margin-left: 0%;
+}
+}
+
+
+@media (max-width: 767.98px) {  }
+
+
+@media (max-width: 991.98px) {  }
+
+@media (max-width: 1199.98px) {  }
+
+
+@media (max-width: 1399.98px) {  }

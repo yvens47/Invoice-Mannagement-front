@@ -73,7 +73,7 @@ function Sidebar(props) {
 				</li>
 				<li>
 					<Link
-						to="#"
+						to="/dashboard/settings"
 						className="nav-link py-3 border-bottom"
 						title=""
 						data-bs-toggle="tooltip"

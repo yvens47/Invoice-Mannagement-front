@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -8,9 +8,11 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser } from '../../store/Auth/authSlice';
+import { fetchUser,signOutUser } from '../../store/Auth/authSlice';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+// import { io } from "socket.io-client";
+// const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
 
 function Login(props) {
 	const [email, setEmail] = useState('');
@@ -19,6 +21,10 @@ function Login(props) {
 	const dispatch = useDispatch();
 	const status = useSelector(state => state.auth.loading);
 
+  useEffect(()=>{
+    document.title ='Login'
+   
+  })
 
 	const handleChange = ({ currentTarget }) => {
 		const { name, value } = currentTarget;
@@ -26,6 +32,10 @@ function Login(props) {
 
 	const submit = async e => {
 		e.preventDefault();
+
+   
+
+   
 		// post request
 		try {
 			dispatch(fetchUser({ email, password }));
@@ -40,10 +50,11 @@ function Login(props) {
 		<div className="wrapper login">
 			<div className="container">
 				<div className="row justify-content-center align-items-center">
-					<div className="col-md-6">
+					<div className="col-md-4">
+            {/*
 						<div className="d-flex justify-content-center align-items-center">
 							<PersonOutlineIcon style={{ fontSize: '10rem' }} />
-						</div>
+						</div> */}
 						<h1 className="display-5 text-center">Login</h1>
 						<Box
 							style={{ background: 'white' }}
@@ -72,7 +83,12 @@ function Login(props) {
 									type="password"
 								/>
 							</div>
-							<div className="mb-2 d-flex justify-content-between ">
+							<div className="mb-3 d-flex justify-content-between ">
+                <div>
+                  <label>
+                    <input type='checkbox' name='remember'/> Remember me
+                  </label>
+                </div>
 								<div>
 									<Link
 										className="btn btn-link p-0 text-decoration-none text-primary"
@@ -81,7 +97,9 @@ function Login(props) {
 										Forgot password
 									</Link>
 								</div>
-								<div>
+								
+							</div>
+              <div className='d-flex'>
 									<Button
 										size="large"
 										type="submit"
@@ -96,7 +114,6 @@ function Login(props) {
 										Login
 									</Button>
 								</div>
-							</div>
 						</Box>
 					</div>
 				</div>

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Outlet } from 'react-router-dom';
 import './dashboard.css';
 import Sidebar from "./sidebar"
 
 function Dashboard(props) {
+  useEffect (()=>{
+    document.title = " My dashboard"
+  }, [])
 	return (
 		<div className="wrapper dashboard d-flex ">
 			<div className="sidebar border-end flex-shrink-1 pt-5">
@@ -22,7 +25,7 @@ function Dashboard(props) {
 				id="staticBackdrop"
 				data-bs-backdrop="static"
 				data-bs-keyboard="false"
-				tabindex="-1"
+				tabIndex="-1"
 				aria-labelledby="staticBackdropLabel"
 				aria-hidden="true"
 			>
