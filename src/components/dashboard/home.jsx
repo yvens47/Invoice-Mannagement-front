@@ -33,7 +33,7 @@ function DashboardHome(props) {
 		setOpen(false);
 	};
 	return (
-		<div className="col-md-12 main-content">
+		<div className="col-md-10 main-content">
 			<h1 className="payment display-3">Set Up payments</h1>
 			<p className="lead">
 			

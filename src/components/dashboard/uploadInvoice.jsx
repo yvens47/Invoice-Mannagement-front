@@ -4,18 +4,24 @@ import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 // import { io } from "socket.io-client";
 // const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function Invoicing(props) {
 	const [invoiceNumber, setInvoiceNumber] = useState('');
 	const [amount, setAmount] = useState(0);
 	const [file, setFile] = useState(null);
+	const [isuPloading, setIsUploading] = useState(false)
+	const [uploadPercent, setUploaddingPercent] = useState(0);
+
+	// Create a new invoice
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		
+
 
 		if (!file || !amount || invoiceNumber === '') {
-		
+
 			alert(' Complete all field');
 		}
 		// process form -- send data to server.
@@ -24,36 +30,41 @@ function Invoicing(props) {
 		formData.append('invoice_number', invoiceNumber);
 		formData.append('invoice_amount', amount);
 		formData.append('file', file);
-    formData.append('token', localStorage.getItem('token'))
-	
+		formData.append('token', localStorage.getItem('token'))
+
 
 		const endpoint =
 			'https://Invoice-Mannagement.jeanpierre34.repl.co/invoices';
-  
+		const config = {
+			onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+		}
+
 
 		axios({
-      url:endpoint,
-      method:'post',
-      data:formData,
-      headers:{
-        'authorization':`Bearer ${localStorage.getItem('token')}`
-      }
-          
-          
-          })
+			url: endpoint,
+			method: 'post',
+			data: formData,
+			headers: {
+				'authorization': `Bearer ${localStorage.getItem('token')}`
+			},
+			config: config
+
+
+		})
 			.then(response => {
-        console.log(response)       
-      })
-      
+				console.log(response)
+			})
+
 			.catch(error => console.log(error));
 
 		//
 	};
+
+	// set file state on change
 	const handleChangeFile = e => {
 		const curFiles = e.currentTarget.files;
 		for (const file of curFiles) {
 			// URL.createObjectURL(file)
-
 			setFile(file);
 		}
 	};
@@ -61,10 +72,15 @@ function Invoicing(props) {
 	return (
 		<div className="container">
 			<div className="row">
+				{isuPloading &&
+					<Box sx={{ width: '100%' }}>
+						<LinearProgress value={uploadPercent} />
+					</Box>
+				}
 				<div className="col-md-8">
 					<h1>Upload</h1>
 					<p className="lead">
-						is a blazing fast frontend build tool that 
+						is a blazing fast frontend build tool that
 					</p>
 
 					<div className="d-flex flex-column">

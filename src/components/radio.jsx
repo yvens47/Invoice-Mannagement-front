@@ -7,7 +7,7 @@ function InputRadio(props) {
   const [value, setValue] = useState(0);
   const handleChangle = ({currentTarget})=>{
    
-    console.log(currentTarget.value);
+    
     if(currentTarget.checked){
       console.log("index,",props.index ," value", props.value)
       setHideBtn(true)
@@ -15,11 +15,13 @@ function InputRadio(props) {
    
     
   }
-  
+
   
   return (
-    <label className="list-group-item d-flex gap-2">
-      <input
+    <label 
+    
+    className="list-group-item d-flex gap-2">
+      <input 
         value={''}
         data-id={props.id}
         onChange={handleChangle}
@@ -34,4 +36,6 @@ function InputRadio(props) {
     
   )
 }
+
+
 export default InputRadio

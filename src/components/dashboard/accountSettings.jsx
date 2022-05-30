@@ -27,12 +27,11 @@ function AccountSettings(props) {
   }
   const updatePassword = (e) => {
     e.preventDefault();
-
     dispatch(changePassword({ id: user._id, newPassword: newpassword, currentPassword: oldpassword, token: localStorage.getItem('token') }));
 
   }
   const handleChange =({currentTarget})=>{
-    console.log(currentTarget.value);
+    
     setValue(currentTarget.value)
     
     
