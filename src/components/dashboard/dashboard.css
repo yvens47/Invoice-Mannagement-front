@@ -1,72 +1,82 @@
-
 .navbar {
-    
-    z-index: 15;
+
+  z-index: 15;
 }
-.dashboard{
-  
-}
+
+.dashboard {}
+
 .content {
-  width:80%;
-  margin-left:10%;
+  width: 80%;
+  margin-left: 10%;
 }
 
-.sidebar{
+.sidebar {
   width: 4.5rem;
-  position:fixed;
-  bottom:0;
-  height:100%;
-  background:white;
+  position: fixed;
+  bottom: 0;
+  height: 100%;
+  background: white;
   z-index: 10;
-  
-}
-.sidebar div:first-child{
-  background:white;
-}
-.documents{
-  background:white;
-  
-}
-.account-balance{
-  background:white;
 
-  
 }
 
-.document:hover{
-  background:#eee;
+.sidebar div:first-child {
+  background: white;
 }
+
+.documents {
+  background: white;
+
+}
+
+.account-balance {
+  background: white;
+
+
+}
+
+.document:hover {
+  background: #eee;
+}
+
 .upload-label input {
-    display:none;
-    
+  display: none;
+
 }
-.upload-label  {
-   
-    display:flex;
+
+.upload-label {
+
+  display: flex;
   align-content: center;
   justify-content: center;
   align-items: center;
   height: 100px;
 }
 
+.image-profile input[type=file] {
+  display: none;
+
+
+}
 
 @media (max-width: 575.98px) {
-  .sidebar{
-    display:none;
+  .sidebar {
+    display: none;
   }
+
   .content {
     width: 100%;
     margin-left: 0%;
+  }
 }
-}
 
 
-@media (max-width: 767.98px) {  }
+@media (max-width: 767.98px) {}
 
 
-@media (max-width: 991.98px) {  }
+@media (max-width: 991.98px) {}
 
-@media (max-width: 1199.98px) {  }
+@media (max-width: 1199.98px) {}
 
 
-@media (max-width: 1399.98px) {  }
+@media (max-width: 1399.98px) {}

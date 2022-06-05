@@ -26,16 +26,11 @@ function DashboardHome(props) {
 	const [open, setOpen] = useState(false);
 	const [companyDetail, setCompanyDetail] = useState({
 
-
-
-
 		name: String,
 		address: {},
 		balance: String,
 		email: String,
 		about: String
-
-
 
 
 	})

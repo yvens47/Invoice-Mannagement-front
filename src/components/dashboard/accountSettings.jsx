@@ -7,7 +7,8 @@ import { IconButton, ToggleButton } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { requestPayment } from '../../store/Document/invoiceSlice';
 import { changePassword } from '../../store/Auth/authSlice';
-import InputRadio  from "../../components/radio"
+import InputRadio from "../../components/radio"
+import DialogBox from './dialog';
 
 
 
@@ -18,6 +19,7 @@ function AccountSettings(props) {
   const [oldpassword, setOldPassword] = useState('');
   const [value, setValue] = useState('1');
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
   // const user = useSelector(state => state.auth.user);
 
   const update = () => {
@@ -30,11 +32,11 @@ function AccountSettings(props) {
     dispatch(changePassword({ id: user._id, newPassword: newpassword, currentPassword: oldpassword, token: localStorage.getItem('token') }));
 
   }
-  const handleChange =({currentTarget})=>{
-    
+  const handleChange = ({ currentTarget }) => {
+
     setValue(currentTarget.value)
-    
-    
+
+
   }
 
   return (
@@ -43,7 +45,8 @@ function AccountSettings(props) {
         <div style={{ background: 'white' }} className='border d-flex justify-content-center align-items-center p-3 flex-column mb-2'>
           <div style={{ width: '50%' }} className='image-profile position-relative  d-flex justify-content-center align-items-center p-3 flex-column mb-2'>
             <img className='rounded-circle p-3 border' src='https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80' width='100%' alt='user profile pic' />
-            <IconButton onClick={() => alert("Edit Pic")} size='large' style={{ bottom: '-5px', left: '45%' }} className='position-absolute' color='primary'><CameraAltIcon fontSize='large' /></IconButton>
+
+            <IconButton onClick={() => setOpen(!open)} size='large' style={{ bottom: '-5px', left: '45%' }} className='position-absolute' color='primary'><CameraAltIcon fontSize='large' /></IconButton>
           </div>
 
 
@@ -104,14 +107,19 @@ function AccountSettings(props) {
           <h1 className='display-5'>Users</h1>
 
           <div className="list-group mx-0 w-auto">
-           <InputRadio labelTitle='Jens Pierre' value='1' index='1'   />
-          <InputRadio labelTitle='Jens greg' value='2'  index='2'     />
-          
+            <InputRadio labelTitle='Jens Pierre' value='1' index='1' />
+            <InputRadio labelTitle='Jens greg' value='2' index='2' />
+
           </div>
         </div>
 
       </div>
 
+      {/* Dialog for image picker */}
+      <DialogBox title='Picc a profile Pic' open={open} handleClose={() => setOpen(false)} >
+        <h1 className='display-3'>Profile Pick</h1>
+
+      </DialogBox>
     </>
   );
 }

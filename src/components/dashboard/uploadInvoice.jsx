@@ -6,6 +6,9 @@ import axios from 'axios';
 // const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function Invoicing(props) {
 	const [invoiceNumber, setInvoiceNumber] = useState('');
@@ -13,11 +16,14 @@ function Invoicing(props) {
 	const [file, setFile] = useState(null);
 	const [isuPloading, setIsUploading] = useState(false)
 	const [uploadPercent, setUploaddingPercent] = useState(0);
+	const [open, setOpen] = React.useState(false);
 
 	// Create a new invoice
 
 	const handleSubmit = e => {
+
 		e.preventDefault();
+
 
 
 		if (!file || !amount || invoiceNumber === '') {
@@ -31,26 +37,28 @@ function Invoicing(props) {
 		formData.append('invoice_amount', amount);
 		formData.append('file', file);
 		formData.append('token', localStorage.getItem('token'))
-
+		formData.append('userid', props.user._id);
+		setOpen(!open)
 
 		const endpoint =
 			'https://Invoice-Mannagement.jeanpierre34.repl.co/invoices';
 		const config = {
-			onUploadProgress: progressEvent => console.log(progressEvent.loaded)
-		}
 
+			onUploadProgress: function (progressEvent) {
+				// Do whatever you want with the native progress event
+				const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+				setUploaddingPercent(percentComplete);
+				console.log(percentComplete)
 
-		axios({
-			url: endpoint,
-			method: 'post',
-			data: formData,
+			},
 			headers: {
 				'authorization': `Bearer ${localStorage.getItem('token')}`
 			},
-			config: config
+		}
 
 
-		})
+
+		axios.post(endpoint, formData, config)
 			.then(response => {
 				console.log(response)
 			})
@@ -68,15 +76,31 @@ function Invoicing(props) {
 			setFile(file);
 		}
 	};
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const handleToggle = () => {
+		setOpen(!open);
+	};
+
 
 	return (
 		<div className="container">
+			{uploadPercent > 0 && uploadPercent < 100 && (
+				<Backdrop
+					sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+					open={open}
+					onClick={handleClose}
+				>
+					<CircularProgress color="inherit" variant="determinate" value={uploadPercent} />
+				</Backdrop>)}
+
 			<div className="row">
-				{isuPloading &&
+				{/* {isuPloading &&
 					<Box sx={{ width: '100%' }}>
 						<LinearProgress value={uploadPercent} />
 					</Box>
-				}
+				} */}
 				<div className="col-md-8">
 					<h1>Upload</h1>
 					<p className="lead">

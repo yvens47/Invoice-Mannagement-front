@@ -11,18 +11,22 @@ import IconButton from '@mui/material/IconButton';
 import DocumentPreview from './documentPreview';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { makeStyles } from '@mui/styles';
 //import { io } from 'socket.io-client';
 // const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
 import { useSelector, useDispatch } from 'react-redux';
 import { requestPayment } from '../../store/Document/invoiceSlice';
+
+
+
 
 function DocumentHome(props) {
 	const [view, setView] = useState('Add');
 	const [open, setOpen] = useState(false);
 	const [documents, setDocuments] = useState([]);
 	const [src, setSrc] = useState('');
-  const user =  useSelector(state => state.auth.user);
-  const dispatch = useDispatch();
+	const user = useSelector(state => state.auth.user);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const endpoint =
@@ -30,10 +34,10 @@ function DocumentHome(props) {
 
 		axios
 			.get(endpoint)
-			.then(function(response) {
+			.then(function (response) {
 				setDocuments(response.data);
 			})
-			.catch(function(e) {
+			.catch(function (e) {
 				console.log(e);
 			});
 		// socket.on('uploaded', data => {
@@ -54,31 +58,31 @@ function DocumentHome(props) {
 		alert('hello send');
 	};
 	const preview = (d) => {
-    //https://invoice-mannagement.jeanpierre34.repl.co/uploads/file-1652023487912-30013395.pdf
-    const location = d.invoice_image;
-   
-   
-  
+		//https://invoice-mannagement.jeanpierre34.repl.co/uploads/file-1652023487912-30013395.pdf
+		const location = d.invoice_image;
+
+
+
 		setView('View');
 		setOpen(true);
-		setSrc( `https://invoice-mannagement.jeanpierre34.repl.co/${location}`);
+		setSrc(`https://invoice-mannagement.jeanpierre34.repl.co/${location}`);
 	};
-  const handleRequestPayment =(data)=>{
-   
-    dispatch(requestPayment(data));
-  }
+	const handleRequestPayment = (data) => {
+
+		dispatch(requestPayment(data));
+	}
 
 	return (
 		<>
 			<div className="col-md-10">
-      
-        
+
+
 				<div className="lead d-flex justify-content-between mb-2">
 					Dcouments({documents.length})
 					<span className="d-flex ">
 						<p className="me-3"> </p>
 						<Button
-              
+
 							variant="outlined"
 							onClick={() => {
 								setView('Add');
@@ -103,6 +107,8 @@ function DocumentHome(props) {
 						<div>Status</div>
 						<div>Actions</div>
 					</div>
+
+
 					{documents &&
 						documents.map(document => (
 							<div
@@ -116,7 +122,7 @@ function DocumentHome(props) {
 									{!document.paid ? (
 										<Button
 											disabled={document.payment_request}
-											onClick={()=>handleRequestPayment(document)}
+											onClick={() => handleRequestPayment(document)}
 											startIcon={<AttachMoneyIcon />}
 											variant="contained"
 											color="info"
@@ -136,24 +142,24 @@ function DocumentHome(props) {
 									)}
 								</div>
 								<div className='d-flex'>
-									<IconButton onClick={()=>preview(document)}>
+									<IconButton onClick={() => preview(document)}>
 										<PreviewIcon />
 									</IconButton>
-                  <IconButton  onClick={()=>preview(document)}>
-										<DeleteIcon  />
+									<IconButton onClick={() => preview(document)}>
+										<DeleteIcon />
 									</IconButton>
-                  
+
 								</div>
 							</div>
 						))}
 				</div>
-        {/*  pagination*/}
-        
-          
+				{/*  pagination*/}
+
+
 			</div>
 
 			<DialogBox
-				content={view === 'Add' ? <Invoicing /> : <DocumentPreview src={src} />}
+				content={view === 'Add' ? <Invoicing user={user} /> : <DocumentPreview src={src} />}
 				open={open}
 				handleClickOpen={handleClickOpen}
 				handleClose={handleClose}
