@@ -11,11 +11,11 @@ import IconButton from '@mui/material/IconButton';
 import DocumentPreview from './documentPreview';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { makeStyles } from '@mui/styles';
+
 //import { io } from 'socket.io-client';
 // const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
 import { useSelector, useDispatch } from 'react-redux';
-import { requestPayment } from '../../store/Document/invoiceSlice';
+import { requestPayment, deleteDocument, getDocuments } from '../../store/Document/invoiceSlice';
 
 
 
@@ -23,23 +23,18 @@ import { requestPayment } from '../../store/Document/invoiceSlice';
 function DocumentHome(props) {
 	const [view, setView] = useState('Add');
 	const [open, setOpen] = useState(false);
-	const [documents, setDocuments] = useState([]);
+	// const [documents, setDocuments] = useState([]);
 	const [src, setSrc] = useState('');
 	const user = useSelector(state => state.auth.user);
+	const documents = useSelector(state => state.invoices.invoices);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const endpoint =
 			`https://Invoice-Mannagement.jeanpierre34.repl.co/invoices/${user._id}`;
 
-		axios
-			.get(endpoint)
-			.then(function (response) {
-				setDocuments(response.data);
-			})
-			.catch(function (e) {
-				console.log(e);
-			});
+		dispatch(getDocuments(user._id));
+
 		// socket.on('uploaded', data => {
 		// 	console.log(data);
 		// });
@@ -70,6 +65,12 @@ function DocumentHome(props) {
 	const handleRequestPayment = (data) => {
 
 		dispatch(requestPayment(data));
+	}
+	const deleteDoc = (document) => {
+		dispatch(deleteDocument(document));
+		dispatch(getDocuments(user._id));
+
+
 	}
 
 	return (
@@ -145,7 +146,7 @@ function DocumentHome(props) {
 									<IconButton onClick={() => preview(document)}>
 										<PreviewIcon />
 									</IconButton>
-									<IconButton onClick={() => preview(document)}>
+									<IconButton onClick={() => deleteDoc(document)}>
 										<DeleteIcon />
 									</IconButton>
 

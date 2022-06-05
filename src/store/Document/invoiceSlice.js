@@ -25,6 +25,43 @@ export const requestPayment = createAsyncThunk('payment/request', async (data) =
   }
 })
 
+export const deleteDocument = createAsyncThunk('document/delete', async (data) => {
+
+  try {
+
+    const response = await axios.delete(`${endpoint}delete`, {
+      headers: {
+        Authorization: ''
+      },
+      data: data
+    });
+    return (response)
+
+  } catch (error) {
+    console.log(error)
+
+  }
+
+})
+
+export const getDocuments = createAsyncThunk('getdocs/request', async (userid) => {
+
+  try {
+
+    const response = await axios.get(`${endpoint}${userid}`);
+
+
+    return response;
+  } catch (error) {
+    console.log("line 27", error)
+    if (error.code === "ERR_BAD_REQUEST") {
+      toast.error(error.response.data.message);
+      return null;
+    }
+    toast.error(error.response.data.message);
+    return null;
+  }
+})
 
 const initialState = {
   invoices: [],
@@ -58,14 +95,43 @@ export const invoiceSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(getDocuments.fulfilled, (state, action) => {
+
+      // Add user to the state array
+      state.loading = 'succeeded';
+      state.invoices = action.payload.data;
+
+    }).addCase(getDocuments.pending, (state, action) => {
+      // Add user to the state array     
+      state.loading = 'pending';
+    }).addCase(getDocuments.rejected, (state, action) => {
+      // Add user to the state array     
+      state.loading = 'failed';
+    });
+
+    // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(requestPayment.fulfilled, (state, action) => {
       // Add user to the state array
       state.loading = 'succeeded';
-      console.log(action.payload)
+
     }).addCase(requestPayment.pending, (state, action) => {
       // Add user to the state array     
       state.loading = 'pending';
     }).addCase(requestPayment.rejected, (state, action) => {
+      // Add user to the state array     
+      state.loading = 'failed';
+    });
+
+    // delete document
+    builder.addCase(deleteDocument.fulfilled, (state, action) => {
+      state.loading = 'succeeded';
+
+
+      console.log(state);
+    }).addCase(deleteDocument.pending, (state, action) => {
+      // Add user to the state array     
+      state.loading = 'pending';
+    }).addCase(deleteDocument.rejected, (state, action) => {
       // Add user to the state array     
       state.loading = 'failed';
     });
