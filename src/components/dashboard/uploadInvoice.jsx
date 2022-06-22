@@ -8,6 +8,11 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { toast } from 'react-toastify'
+import { uploadDocuments } from '../../store/Document/invoiceSlice';
+import { useSelector, useDispatch } from 'react-redux'
+
+import { toggle } from "../../store/ui/modalSlice"
 
 
 function Invoicing(props) {
@@ -16,11 +21,16 @@ function Invoicing(props) {
 	const [file, setFile] = useState(null);
 	const [isuPloading, setIsUploading] = useState(false)
 	const [uploadPercent, setUploaddingPercent] = useState(0);
-	const [open, setOpen] = React.useState(false);
+	// const [open, setOpen] = React.useState(false);
+	const dispatch = useDispatch();
+	const modalState = useSelector((state) => state.showModal);
+	console.log(modalState);
+	const uploadPercentage = useSelector((state) => state.invoices.uploadPercent)
 
 	// Create a new invoice
 
 	const handleSubmit = e => {
+
 
 		e.preventDefault();
 
@@ -28,7 +38,9 @@ function Invoicing(props) {
 
 		if (!file || !amount || invoiceNumber === '') {
 
-			alert(' Complete all field');
+			// toast
+			toast.error("Please provide a valid invoices");
+
 		}
 		// process form -- send data to server.
 		// formData
@@ -38,7 +50,9 @@ function Invoicing(props) {
 		formData.append('file', file);
 		formData.append('token', localStorage.getItem('token'))
 		formData.append('userid', props.user._id);
-		setOpen(!open)
+		// setOpen(!open)
+		// dispatch(uploadDocuments(formData));
+
 
 		const endpoint =
 			'https://Invoice-Mannagement.jeanpierre34.repl.co/invoices';
@@ -48,7 +62,7 @@ function Invoicing(props) {
 				// Do whatever you want with the native progress event
 				const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
 				setUploaddingPercent(percentComplete);
-				console.log(percentComplete)
+
 
 			},
 			headers: {
@@ -56,16 +70,19 @@ function Invoicing(props) {
 			},
 		}
 
+		dispatch(uploadDocuments(formData));
 
 
-		axios.post(endpoint, formData, config)
-			.then(response => {
-				console.log(response)
-			})
 
-			.catch(error => console.log(error));
+		// axios.post(endpoint, formData, config)
+		// 	.then(response => {
+		// 		console.log(response)
+		// 		dispatch(toggle())
+		// 	})
 
-		//
+		// 	.catch(error => console.log(error));
+
+
 	};
 
 	// set file state on change
@@ -86,13 +103,13 @@ function Invoicing(props) {
 
 	return (
 		<div className="container">
-			{uploadPercent > 0 && uploadPercent < 100 && (
+			{uploadPercentage > 0 && uploadPercentage < 100 && (
 				<Backdrop
 					sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
 					open={open}
 					onClick={handleClose}
 				>
-					<CircularProgress color="inherit" variant="determinate" value={uploadPercent} />
+					<CircularProgress color="inherit" variant="determinate" value={uploadPercentage} />
 				</Backdrop>)}
 
 			<div className="row">
@@ -104,7 +121,7 @@ function Invoicing(props) {
 				<div className="col-md-8">
 					<h1>Upload</h1>
 					<p className="lead">
-						is a blazing fast frontend build tool that
+						Enter your invoice number, amount, and upload a pdf version of your invoice.
 					</p>
 
 					<div className="d-flex flex-column">

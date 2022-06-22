@@ -25,7 +25,7 @@ export const fetchUser = createAsyncThunk('auth/login', async (data) => {
     return response.data.user;
 
   } catch (error) {
-   
+
     if (error.code === "ERR_BAD_REQUEST") {
       toast.error(error.response.data.message);
       return null;
@@ -87,44 +87,44 @@ export const signOutUser = createAsyncThunk('auth/signout', async () => {
   }
 });
 
-export const forgotPassword = createAsyncThunk('auth/forgotPassword', async(email)=>{
-try{
-   // get request here
-  
-  const response =await axios.get(`${endpoint}forgot-password/${email}`);
-  console.log(response)
-  if(response.data.success){
-     toast.success(response.data.message)
+export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (email) => {
+  try {
+    // get request here
+
+    const response = await axios.get(`${endpoint}forgot-password/${email}`);
+    console.log(response)
+    if (response.data.success) {
+      toast.success(response.data.message)
+    }
+    if (!response.data.success) {
+      toast.error(response.data.message)
+    }
+
+    return response.data.message;
+
   }
-  if(!response.data.success){
-     toast.error(response.data.message)
-  }
- 
-  return response.data.message;
-  
-}
-  catch(error){
+  catch (error) {
     console.log(error)
   }
- 
-  
+
+
 })
 
-export const changePassword = createAsyncThunk('auth/changePasword', async(data)=>{
+export const changePassword = createAsyncThunk('auth/changePasword', async (data) => {
 
-  try{
-    const response  = await axios.post(`${endpoint}change-password`,data,{
-      headers:{"Authorization":`Bearer ${data.token}`}
+  try {
+    const response = await axios.post(`${endpoint}change-password`, data, {
+      headers: { "Authorization": `Bearer ${data.token}` }
     });
-   
+
     toast.success(response.data.message)
-    
-  }catch(error){
+
+  } catch (error) {
     console.log(error)
     toast.error(error.response.data.message)
   }
 
-  
+
 })
 
 const initialState = {
@@ -190,7 +190,7 @@ export const authSlice = createSlice({
       state.loading = 'failed';
     })
 
-     builder.addCase(forgotPassword.fulfilled, (state, action) => {
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
       // Add user to the state array  
       state.user = null;
       state.loading = 'succeed';
@@ -202,7 +202,7 @@ export const authSlice = createSlice({
     });
 
     // change password
-     builder.addCase(changePassword.fulfilled, (state, action) => {
+    builder.addCase(changePassword.fulfilled, (state, action) => {
       // Add user to the state array  
       // state.user = null;
       state.loading = 'succeed';

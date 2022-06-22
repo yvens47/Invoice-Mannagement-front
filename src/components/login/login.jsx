@@ -8,7 +8,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser,signOutUser } from '../../store/Auth/authSlice';
+import { fetchUser, signOutUser } from '../../store/Auth/authSlice';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 // import { io } from "socket.io-client";
@@ -21,10 +21,10 @@ function Login(props) {
 	const dispatch = useDispatch();
 	const status = useSelector(state => state.auth.loading);
 
-  useEffect(()=>{
-    document.title ='Login'
-   
-  })
+	useEffect(() => {
+		document.title = 'Login'
+
+	})
 
 	const handleChange = ({ currentTarget }) => {
 		const { name, value } = currentTarget;
@@ -33,9 +33,9 @@ function Login(props) {
 	const submit = async e => {
 		e.preventDefault();
 
-   
 
-   
+
+
 		// post request
 		try {
 			dispatch(fetchUser({ email, password }));
@@ -44,6 +44,7 @@ function Login(props) {
 			// toast.error(error.response.data.message)
 		}
 	};
+
 	if (loggedIn) return <Navigate to="/dashboard" />;
 
 	return (
@@ -51,7 +52,7 @@ function Login(props) {
 			<div className="container">
 				<div className="row justify-content-center align-items-center">
 					<div className="col-md-4">
-            {/*
+						{/*
 						<div className="d-flex justify-content-center align-items-center">
 							<PersonOutlineIcon style={{ fontSize: '10rem' }} />
 						</div> */}
@@ -84,11 +85,11 @@ function Login(props) {
 								/>
 							</div>
 							<div className="mb-3 d-flex justify-content-between ">
-                <div>
-                  <label>
-                    <input type='checkbox' name='remember'/> Remember me
-                  </label>
-                </div>
+								<div>
+									<label>
+										<input type='checkbox' name='remember' /> Remember me
+									</label>
+								</div>
 								<div>
 									<Link
 										className="btn btn-link p-0 text-decoration-none text-primary"
@@ -97,23 +98,23 @@ function Login(props) {
 										Forgot password
 									</Link>
 								</div>
-								
+
 							</div>
-              <div className='d-flex'>
-									<Button
-										size="large"
-										type="submit"
-										variant="contained"
-										color="primary"
-									>
-										{status === 'pending' && (
-											<Box sx={{ display: 'flex' }}>
-												<CircularProgress />
-											</Box>
-										)}
-										Login
-									</Button>
-								</div>
+							<div className='d-flex'>
+								<Button
+									size="large"
+									type="submit"
+									variant="contained"
+									color="primary"
+								>
+									{status === 'pending' && (
+										<Box sx={{ display: 'flex' }}>
+											<CircularProgress />
+										</Box>
+									)}
+									Login
+								</Button>
+							</div>
 						</Box>
 					</div>
 				</div>

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import DownloadIcon from '@mui/icons-material/Download';
 import DialogBox from './dialog';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Invoicing from './uploadInvoice';
-import PreviewIcon from '@mui/icons-material/Preview';
-import IconButton from '@mui/material/IconButton';
+
 import DocumentPreview from './documentPreview';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
@@ -16,7 +15,8 @@ import axios from 'axios';
 // const socket = io('https://Invoice-Mannagement.jeanpierre34.repl.co');
 import { useSelector, useDispatch } from 'react-redux';
 import { requestPayment, deleteDocument, getDocuments } from '../../store/Document/invoiceSlice';
-
+import Documents from './documents';
+import { toggle } from "../../store/ui/modalSlice"
 
 
 
@@ -28,10 +28,10 @@ function DocumentHome(props) {
 	const user = useSelector(state => state.auth.user);
 	const documents = useSelector(state => state.invoices.invoices);
 	const dispatch = useDispatch();
+	const modalState = useSelector((state) => state.modal.showModal);
+
 
 	useEffect(() => {
-		const endpoint =
-			`https://Invoice-Mannagement.jeanpierre34.repl.co/invoices/${user._id}`;
 
 		dispatch(getDocuments(user._id));
 
@@ -41,17 +41,15 @@ function DocumentHome(props) {
 	}, []);
 
 	const handleClickOpen = () => {
-		setOpen(true);
+		dispatch(toggle())
 	};
 
 	const handleClose = () => {
-		setOpen(false);
+		// setOpen(false);
+		dispatch(toggle())
 	};
 
-	const submitInvoice = e => {
-		e.preventDefault();
-		alert('hello send');
-	};
+
 	const preview = (d) => {
 		//https://invoice-mannagement.jeanpierre34.repl.co/uploads/file-1652023487912-30013395.pdf
 		const location = d.invoice_image;
@@ -65,6 +63,7 @@ function DocumentHome(props) {
 	const handleRequestPayment = (data) => {
 
 		dispatch(requestPayment(data));
+
 	}
 	const deleteDoc = (document) => {
 		dispatch(deleteDocument(document));
@@ -77,94 +76,75 @@ function DocumentHome(props) {
 		<>
 			<div className="col-md-10">
 
+				{documents.length == 0 ? (
+					<div
+						style={{ height: "70vh", }}
+						className='d-flex justify-content-center align-items-center flex-column'>
+						<h1>Upload</h1>
 
-				<div className="lead d-flex justify-content-between mb-2">
-					Dcouments({documents.length})
-					<span className="d-flex ">
-						<p className="me-3"> </p>
-						<Button
+						<p className='lead text-center'>CLick the Upload your invoice Button below to start upload invoice to our portal </p>
+						<Button size='large' variant='outlined' onClick={() => {
+							setView('Add');
 
-							variant="outlined"
-							onClick={() => {
-								setView('Add');
-								setOpen(true);
-							}}
-						>
-							<UploadFileIcon />
-						</Button>
+							dispatch(toggle())
+						}}>
+							Upload your invoice
 
-						<Button>
-							<DownloadIcon />
 						</Button>
-						<Button>
-							<MenuIcon />
-						</Button>
-					</span>
-				</div>
-				<div className="documents border p-4 d-flex flex-column">
-					<div className="document border-bottom p-2  d-flex justify-content-between">
-						<div>Invoice #</div>
-						<div>Amount</div>
-						<div>Status</div>
-						<div>Actions</div>
 					</div>
+				) : (
+					<>
+						<div className="lead d-flex justify-content-between mb-2">
+							Dcouments({documents.length})
+							<span className="d-flex ">
+								<p className="me-3"> </p>
+								<Button
 
+									variant="outlined"
+									onClick={() => {
+										setView('Add');
+										//setOpen(true);
+										dispatch(toggle())
+									}}
+								>
+									<UploadFileIcon />
+								</Button>
 
-					{documents &&
-						documents.map(document => (
-							<div
-								key={document._id}
-								className="document border-bottom p-2  d-flex justify-content-between"
-							>
-								<div>{document.invoice_number}</div>
-								<div>{document.invoice_amount}</div>
-								<div>
-									{document.paid}
-									{!document.paid ? (
-										<Button
-											disabled={document.payment_request}
-											onClick={() => handleRequestPayment(document)}
-											startIcon={<AttachMoneyIcon />}
-											variant="contained"
-											color="info"
-										>
-											{' '}
-											Request Payment
-										</Button>
-									) : (
-										<Button
-											disabled={true}
-											startIcon={<AttachMoneyIcon />}
-											variant="outlined"
-											color="info"
-										>
-											Paid{' '}
-										</Button>
-									)}
-								</div>
-								<div className='d-flex'>
-									<IconButton onClick={() => preview(document)}>
-										<PreviewIcon />
-									</IconButton>
-									<IconButton onClick={() => deleteDoc(document)}>
-										<DeleteIcon />
-									</IconButton>
-
-								</div>
+								<Button>
+									<DownloadIcon />
+								</Button>
+								<Button>
+									<MenuIcon />
+								</Button>
+							</span>
+						</div>
+						<div className="documents border p-4 d-flex flex-column">
+							<div className="document border-bottom p-2  d-flex justify-content-between">
+								<div>Invoice #</div>
+								<div>Amount</div>
+								<div>Status</div>
+								<div>Actions</div>
 							</div>
-						))}
-				</div>
-				{/*  pagination*/}
+
+
+							<Documents handleRequestPayment={handleRequestPayment} preview={preview} deleteDoc={deleteDoc} documents={documents} />
+						</div>
+						{/*  pagination*/}
+					</>
+				)}
+
+
+
 
 
 			</div>
 
 			<DialogBox
 				content={view === 'Add' ? <Invoicing user={user} /> : <DocumentPreview src={src} />}
-				open={open}
+				open={modalState}
 				handleClickOpen={handleClickOpen}
 				handleClose={handleClose}
-				submit={submitInvoice}
+
 			/>
 		</>
 	);

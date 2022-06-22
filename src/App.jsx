@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/navbar';
 import Dashboard from './components/dashboard/dashboard';
 import DashboardHome from './components/dashboard/home';
+import PortalDashboardHome from './components/portal/portalDashboardHome'
 import DocumentHome from './components/dashboard/documentHome';
 import AccountBalance from './components/dashboard/accountBalance';
 import AccountSetting from './components/dashboard/accountSettings';
@@ -27,6 +28,7 @@ class App extends Component {
   componentDidMount() {
 
     this.props.isLogin();
+
   }
   signOut(e) {
 
@@ -72,19 +74,28 @@ class App extends Component {
             </>
 
           ) : (
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            )}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          )}
 
           {!this.props.user ? (
             <Route path="*" element={<Navigate to="/" replace />} />
           ) : (
-              <Route path="/dashboard" element={<Dashboard />}>
-                <Route index element={<DashboardHome />} />
-                <Route path="documents" element={<DocumentHome />} />
-                <Route path="balance" element={<AccountBalance />} />
-                <Route path='settings' element={<AccountSetting />} />
-              </Route>
-            )}
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="documents" element={<DocumentHome />} />
+              <Route path="balance" element={<AccountBalance />} />
+              <Route path='settings' element={<AccountSetting />} />
+            </Route>
+          )}
+
+
+          <Route exact path='/portal' element={<PortalDashboardHome />} />
+
+
+
+
+
+
         </Routes>
       </main>
     );
