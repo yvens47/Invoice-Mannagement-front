@@ -87,7 +87,7 @@ function Login(props) {
 							<div className="mb-3 d-flex justify-content-between ">
 								<div>
 									<label>
-										<input type='checkbox' name='remember' /> Remember me
+										<input type='checkbox' checked name='remember' /> vendor
 									</label>
 								</div>
 								<div>

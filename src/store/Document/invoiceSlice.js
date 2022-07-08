@@ -77,7 +77,7 @@ export const uploadDocuments = createAsyncThunk('document/upload', async (data, 
         // Do whatever you want with the native progress event
         const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
         // setUploaddingPercent(percentComplete);
-        console.log(percentComplete)
+
         percentage = percentComplete;
         thunkAPI.dispatch({ type: "invoices/updatePercentUpload", payload: percentComplete });
       },
@@ -122,7 +122,6 @@ export const invoiceSlice = createSlice({
     },
     updatePercentUpload: {
       reducer(state, action) {
-        console.log(state)
 
         state.uploadPercent = action.payload
       },

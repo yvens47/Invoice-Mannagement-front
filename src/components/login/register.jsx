@@ -36,145 +36,145 @@ function Register(props) {
     setCompanies(cList);
 
 
-  },[])
+  }, [])
 
 
   const getCompanies = async () => {
     // request to db;
     const endpoint = 'https://Invoice-Mannagement.jeanpierre34.repl.co/companies/names';
     try {
-      const response = await axios.get(endpoint);    
-      console.log(response.data)
+      const response = await axios.get(endpoint);
+
 
       return response.data;
 
     } catch (error) {
-      console.log(error)
+
 
     }
 
 
   }
 
-const handleChange = ({ currentTarget }) => {
-  const { name, value } = currentTarget;
-};
-const handleOnCreateOption = (e) => {
-  setCompany(e)
-  companies.push(e);
+  const handleChange = ({ currentTarget }) => {
+    const { name, value } = currentTarget;
+  };
+  const handleOnCreateOption = (e) => {
+    setCompany(e)
+    companies.push(e);
 
-}
-
-const submit = async e => {
-  e.preventDefault();
-
-
-
-
-  // post request
-  try {
-    dispatch(registerUser({ email, password, first_name: firstname, last_name: lastname }));
-  } catch (error) {
-    console.log(error);
-    // toast.error(error.response.data.message)
   }
-};
-if (loggedIn) return <Navigate to="/dashboard" />;
+
+  const submit = async e => {
+    e.preventDefault();
 
 
-return (
-  <div className="wrapper login">
-    <div className="container">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-4">
-
-          <h1 className="display-5 text-center">Sign up </h1>
-          {JSON.stringify(companies && companies)}
-          <Box
-            style={{ background: 'white' }}
-            onSubmit={submit}
-            component="form"
-            className="border p-3 "
-            c
-          >
-            <div className="mb-2 d-flex ">
-              <TextField
-                className='me-2'
-                fullWidth
-                onChange={e => setFirstName(e.target.value)}
-                id="outlined-basic"
-                label="First Name"
-                variant="outlined"
-              />
-              <TextField
-                fullWidth
-                onChange={e => setLastName(e.target.value)}
-                id="outlined-basic"
-                label="Last Name"
-                variant="outlined"
-              />
-            </div>
-            <div className="mb-2">
-              <TextField
-                fullWidth
-                onChange={e => setEmail(e.target.value)}
-                id="outlined-basic"
-                label="Email"
-                variant="outlined"
-              />
-            </div>
-
-            <div className="mb-2">
-              <TextField
-                fullWidth
-                onChange={e => console.log(e)}
-                id="outlined-basic"
-                label="Password"
-                variant="outlined"
-                type="password"
-              />
-            </div>
-            <div className="mb-3 d-flex justify-content-between ">
 
 
-            </div>
-            <div className='mb-3 d-flex'>
-             
-              {/* <Creatable
+    // post request
+    try {
+      dispatch(registerUser({ email, password, first_name: firstname, last_name: lastname }));
+    } catch (error) {
+      console.log(error);
+      // toast.error(error.response.data.message)
+    }
+  };
+  if (loggedIn) return <Navigate to="/dashboard" />;
+
+
+  return (
+    <div className="wrapper login">
+      <div className="container">
+        <div className="row justify-content-center align-items-center">
+          <div className="col-md-4">
+
+            <h1 className="display-5 text-center">Sign up </h1>
+
+            <Box
+              style={{ background: 'white' }}
+              onSubmit={submit}
+              component="form"
+              className="border p-3 "
+              c
+            >
+              <div className="mb-2 d-flex ">
+                <TextField
+                  className='me-2'
+                  fullWidth
+                  onChange={e => setFirstName(e.target.value)}
+                  id="outlined-basic"
+                  label="First Name"
+                  variant="outlined"
+                />
+                <TextField
+                  fullWidth
+                  onChange={e => setLastName(e.target.value)}
+                  id="outlined-basic"
+                  label="Last Name"
+                  variant="outlined"
+                />
+              </div>
+              <div className="mb-2">
+                <TextField
+                  fullWidth
+                  onChange={e => setEmail(e.target.value)}
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                />
+              </div>
+
+              <div className="mb-2">
+                <TextField
+                  fullWidth
+                  onChange={e => console.log(e)}
+                  id="outlined-basic"
+                  label="Password"
+                  variant="outlined"
+                  type="password"
+                />
+              </div>
+              <div className="mb-3 d-flex justify-content-between ">
+
+
+              </div>
+              <div className='mb-3 d-flex'>
+
+                {/* <Creatable
                 onChange={(e) => setCompany(e.value)}
                 placeholder='Pick or enter company'
 
 
                 label="Pick a company"
                 onCreateOption={handleOnCreateOption} style={{ border: 'none' }} options={companies} /> */}
-                  <TextField
-                fullWidth
-                onChange={e => console.log(e)}
-                id="outlined-basic"
-                label="Company"
-                variant="outlined"
-                type="search"
-              />
+                <TextField
+                  fullWidth
+                  onChange={e => console.log(e)}
+                  id="outlined-basic"
+                  label="Company"
+                  variant="outlined"
+                  type="search"
+                />
 
 
-            </div>
-            <div className='d-flex'>
-              <Button
-                size="large"
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
+              </div>
+              <div className='d-flex'>
+                <Button
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
 
-                Register
-              </Button>
-            </div>
-          </Box>
+                  Register
+                </Button>
+              </div>
+            </Box>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default Register;
