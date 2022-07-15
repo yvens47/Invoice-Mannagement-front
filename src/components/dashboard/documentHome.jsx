@@ -57,7 +57,8 @@ function DocumentHome(props) {
 
 
 		setView('View');
-		setOpen(true);
+		dispatch(toggle())
+		//setOpen(true);
 		setSrc(`https://invoice-mannagement.jeanpierre34.repl.co/${location}`);
 	};
 	const handleRequestPayment = (data) => {

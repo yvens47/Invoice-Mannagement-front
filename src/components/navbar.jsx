@@ -1,22 +1,22 @@
 import React from 'react';
 import AnimationIcon from '@mui/icons-material/Animation';
 import { useSelector, useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom'
-import { fetchUser,signOutUser } from '../store/Auth/authSlice';
+import { Link } from 'react-router-dom'
+import { fetchUser, signOutUser } from '../store/Auth/authSlice';
 function Navbar(props) {
 	const user = useSelector(state => state.auth.user);
-  const dispatch = useDispatch ();
-   const signout =  (e)=>{
-    e.preventDefault();
-   
-     dispatch(signOutUser());
-     console.log(dispatch)
-    
-  }
+	const dispatch = useDispatch();
+	const signout = (e) => {
+		e.preventDefault();
+
+		dispatch(signOutUser());
+		console.log(dispatch)
+
+	}
 	return (
 		<nav
-      style={{background:'white'}}
-      className="navbar navbar-expand-lg navbar-light  fixed-top">
+			style={{ background: 'white' }}
+			className="navbar navbar-expand-lg navbar-light  fixed-top">
 			<div className="container-fluid">
 				<Link className="navbar-brand" to="/">
 					<AnimationIcon fontSize="large" color="primary" />
@@ -50,28 +50,28 @@ function Navbar(props) {
 								Invoice
 							</Link>
 						</li>
-            {user ? (
-						<li className="nav-item dropdown">
-							<Link
-								className="nav-link dropdown-toggle"
-								to="#"
-								id="navbarDropdown"
-								role="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-							>
-                {user.first_name}
-							</Link>
-							
-								<ul className="dropdown-menu " aria-labelledby="navbarDropdown">
-                  <li>
+						{user ? (
+							<li className="nav-item dropdown">
+								<Link
+									className="nav-link dropdown-toggle"
+									to="#"
+									id="navbarDropdown"
+									role="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									{user.first_name}
+								</Link>
+
+								<ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+									<li>
 										<Link className="dropdown-item" to="/dashboard">
-                     Dashboard
+											Dashboard
 										</Link>
 									</li>
 									<li>
 										<Link className="dropdown-item" to="/dashboard/settings">
-                     Settings
+											Settings
 										</Link>
 									</li>
 									<li>
@@ -89,18 +89,18 @@ function Navbar(props) {
 									</li>
 								</ul>
 							</li>) : (
-              <>  
-                {/*<li className="nav-item">
+							<>
+								{/*<li className="nav-item">
 									<Link className="nav-link " to='/'>Login</Link>
 								</li>*/}
-                <li className="nav-item">
+								<li className="nav-item">
 									<Link className="nav-link " to='/register'>Register</Link>
-								</li> 
-              </>
-								
-        
-							)}
-						
+								</li>
+							</>
+
+
+						)}
+
 						{/*<li className="nav-item">
           <Link className="nav-link disabled">Disabled<
         </li>*/}
