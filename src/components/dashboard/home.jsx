@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import {Outlet} from "react-router-dom"
 import Button from '@mui/material/Button';
 import DialogBox from './dialog';
@@ -24,6 +24,12 @@ const company = {
 function DashboardHome(props) {
 
 	const [open, setOpen] = useState(false);
+
+	useEffect(() => {
+
+		console.log("get my company details")
+
+	}, {})
 	const [companyDetail, setCompanyDetail] = useState({
 
 		name: String,

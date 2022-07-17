@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import authSlice from "./Auth/authSlice";
 import invoiceSlice from "./Document/invoiceSlice";
 import modalSlice from './ui/modalSlice';
+import companySlice from "./company/companySlice"
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     invoices: invoiceSlice,
-    modal: modalSlice
+    modal: modalSlice,
+    company: companySlice
   },
 })
 
