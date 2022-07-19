@@ -77,6 +77,8 @@ function DocumentHome(props) {
 		<>
 			<div className="col-md-10">
 
+
+
 				{documents.length == 0 ? (
 					<div
 						style={{ height: "70vh", }}
@@ -84,6 +86,7 @@ function DocumentHome(props) {
 						<h1>Upload</h1>
 
 						<p className='lead text-center'>CLick the Upload your invoice Button below to start upload invoice to our portal </p>
+
 						<Button size='large' variant='outlined' onClick={() => {
 							setView('Add');
 
