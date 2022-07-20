@@ -33,12 +33,7 @@ export const deleteDocument = createAsyncThunk('document/delete', async (data) =
 
   try {
 
-    const response = await axios.delete(`${endpoint}delete`, {
-      headers: {
-        Authorization: ''
-      },
-      data: data
-    });
+    const response = await axios.delete(`${endpoint}delete`, { data: { invoice_number_id: data._id } });
     return (response)
 
   } catch (error) {
@@ -75,7 +70,7 @@ export const uploadDocuments = createAsyncThunk('document/upload', async (data, 
   try {
     let percentage = 0;
     const config = {
-      onUploadProgress: function(progressEvent) {
+      onUploadProgress: function (progressEvent) {
         // Do whatever you want with the native progress event
         const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
         // setUploaddingPercent(percentComplete);
