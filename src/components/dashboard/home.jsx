@@ -28,6 +28,7 @@ function DashboardHome(props) {
 	};
 
 	const add = e => {
+
 		e.preventDefault();
 		dispatch(addCompany(company))
 

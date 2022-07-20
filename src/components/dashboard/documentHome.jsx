@@ -29,12 +29,13 @@ function DocumentHome(props) {
 	const documents = useSelector(state => state.invoices.invoices);
 	const dispatch = useDispatch();
 	const modalState = useSelector((state) => state.modal.showModal);
+	const companyId = useSelector((state) => state.company.detail._id);
 
 
 	useEffect(() => {
 
-		dispatch(getDocuments(user._id));
-
+		dispatch(getDocuments(companyId));
+		console.log(documents)
 		// socket.on('uploaded', data => {
 		// 	console.log(data);
 		// });
@@ -144,7 +145,9 @@ function DocumentHome(props) {
 			</div>
 
 			<DialogBox
-				content={view === 'Add' ? <Invoicing user={user} /> : <DocumentPreview src={src} />}
+				content={view === 'Add' ? <Invoicing
+					companyId={companyId}
+					user={user} /> : <DocumentPreview src={src} />}
 				open={modalState}
 				handleClickOpen={handleClickOpen}
 				handleClose={handleClose}

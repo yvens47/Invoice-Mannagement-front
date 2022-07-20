@@ -51,8 +51,10 @@ export const deleteDocument = createAsyncThunk('document/delete', async (data) =
 export const getDocuments = createAsyncThunk('getdocs/request', async (userid) => {
 
   try {
+    console.log(userid)
 
     const response = await axios.get(`${endpoint}${userid}`);
+
 
 
     return response;

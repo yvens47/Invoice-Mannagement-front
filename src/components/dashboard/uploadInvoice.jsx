@@ -33,6 +33,7 @@ function Invoicing(props) {
 
 
 		e.preventDefault();
+		console.log(e)
 
 
 
@@ -41,39 +42,41 @@ function Invoicing(props) {
 			// toast
 			toast.error("Please provide a valid invoices");
 
+
 		}
-		// process form -- send data to server.
-		// formData
-		var formData = new FormData();
-		formData.append('invoice_number', invoiceNumber);
-		formData.append('invoice_amount', amount);
-		formData.append('file', file);
-		formData.append('token', localStorage.getItem('token'))
-		formData.append('userid', props.user._id);
-		// setOpen(!open)
-		// dispatch(uploadDocuments(formData));
+		else {
+			// process form -- send data to server.
+			// formData
+			var formData = new FormData();
+			formData.append('invoice_number', invoiceNumber);
+			formData.append('invoice_amount', amount);
+			formData.append('file', file);
+			formData.append('token', localStorage.getItem('token'))
+			formData.append('userid', props.user._id);
+			formData.append('companyId', props.companyId)
+			// setOpen(!open)
+			// dispatch(uploadDocuments(formData));
 
 
-		const endpoint =
-			'https://Invoice-Mannagement.jeanpierre34.repl.co/invoices';
-		const config = {
+			const endpoint = 'https://Invoice-Mannagement.jeanpierre34.repl.co/invoices';
+			const config = {
 
-			onUploadProgress: function (progressEvent) {
-				// Do whatever you want with the native progress event
-				const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-				setUploaddingPercent(percentComplete);
+				onUploadProgress: function (progressEvent) {
+					// Do whatever you want with the native progress event
+					const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+					setUploaddingPercent(percentComplete);
 
 
-			},
-			headers: {
-				'authorization': `Bearer ${localStorage.getItem('token')}`
-			},
+				},
+				headers: {
+					'authorization': `Bearer ${localStorage.getItem('token')}`
+				},
+			}
+
+			dispatch(uploadDocuments(formData));
+
+
 		}
-
-		dispatch(uploadDocuments(formData));
-
-
-
 		// axios.post(endpoint, formData, config)
 		// 	.then(response => {
 		// 		console.log(response)
