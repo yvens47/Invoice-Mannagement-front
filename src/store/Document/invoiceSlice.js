@@ -75,7 +75,7 @@ export const uploadDocuments = createAsyncThunk('document/upload', async (data, 
   try {
     let percentage = 0;
     const config = {
-      onUploadProgress: function (progressEvent) {
+      onUploadProgress: function(progressEvent) {
         // Do whatever you want with the native progress event
         const percentComplete = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
         // setUploaddingPercent(percentComplete);
@@ -196,6 +196,7 @@ export const invoiceSlice = createSlice({
     // delete document
     builder.addCase(deleteDocument.fulfilled, (state, action) => {
       state.loading = 'succeeded';
+      console.log(action.payload)
 
 
 
